@@ -1,12 +1,21 @@
-from telegram import Update
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, ContextTypes
+
 
 TOKEN = ''
 
 
 async def help(update, context):
     print('help request recieved')
-    await update.message.reply_text("what can i help you with?")
+    keyboard = [
+        [InlineKeyboardButton("List all shoes", callback_data='button1')],
+        [InlineKeyboardButton("Show shoe discriptions", callback_data='button2')],
+        [InlineKeyboardButton("Order shoe", callback_data='button3')],
+        [InlineKeyboardButton("Confirm payment", callback_data='button4')]
+    ]
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await update.message.reply_text("what do you want to do?", reply_markup=reply_markup)
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
